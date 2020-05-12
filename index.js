@@ -105,6 +105,7 @@ try {
   // Loop & interate between all freeleech torrents available.
   for (let group of data.Movies){
     let torrent = group.Torrents[0]
+    let isMatch = false
 
     // Parse torrent information.
     let seeders = Number(torrent.Seeders)
@@ -135,6 +136,22 @@ try {
     // Check if torrent is already within the known freeleech cache.
     if (!cache.freeleech.includes(torrent.Id)){
       // Run a series of checks based on user configuration.
+      if (config.matchByAgeAndMaxSeeders){
+        for (let index = 0; index < config.matchByAgeAndMaxSeeders.length; index ++) {
+          let rule = config.matchByAgeAndMaxSeeders[index]
+          if (time <= rule.maxAge && time > maxtime && seeders <= rule.maxSeeders) {
+            if (minsize === -1 || size >= minsize) {
+              isMatch = true;
+              break;
+            } 
+          }else {
+                if (rule.maxAge === -1 && seeders <= rule.maxSeeders ){
+                  isMatch = true;
+                  break;
+                }
+           }
+        }
+      }
       if (minseeders === -1 || seeders >= minseeders){
         if (maxseeders === -1 || seeders <= maxseeders){
           if (minleechers === -1 || leechers >= minleechers){
@@ -142,7 +159,7 @@ try {
               if (minsize === -1 || size >= minsize){
                 if (maxsize === -1 || size <= maxsize){
                   if (mintime === -1 || time >= mintime){
-                    if (maxtime === -1 || time <= maxtime){
+                    if (maxtime === -1 || time <= maxtime || isMatch === true){
                       // If discord webhook URI is present, log to Discord using an embed.
                       if (config.discord){
                         webhook.send(
