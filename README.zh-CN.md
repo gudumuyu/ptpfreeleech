@@ -28,6 +28,15 @@
 
 修改配置文件: 复制`example.config.json`为`config.json`, 填上你的apiUser和apiKey(ptp网站edit-security)
 
+## Usage
+
+To start the script, run the following command within the script's working directory.
+
+```bash
+$ npm run start # Run if using npm.
+$ yarn run start # Run if using yarn.
+```
+
 ### crontab -e 中添加任务
 */6 * * * * cd /home/{username}/ptpfreeleech && /home/{username}/.nvm/versions/node/v14.2.0/bin/npm start
 
