@@ -1,6 +1,7 @@
 # PTP免费种子下载
 
 一个自动下载ptp免费种子的nodejs程序.
+在https://github.com/winneon/ptpfreeleech.git  添加部分   https://github.com/lushdog/ptpfl.git 中的功能
 
 ### 安装
 
@@ -18,29 +19,33 @@
 
 下载代码
 
-`git clone https://github.com/lushdog/ptpfl.git`
+`git clone https://github.com/gudumuyu/ptpfreeleech.git`
 
-进入到ptpfl目录下, 安装依赖
+进入到ptpfreeleech目录下, 安装依赖
 
 `npm install`
 
 修改配置文件: 复制`example.config.json`为`config.json`, 填上你的apiUser和apiKey(ptp网站edit-security)
 
-### 运行(ptpfl目录下)
+### crontab -e 中添加任务
+*/6 * * * * cd /home/{username}/ptpfreeleech && /home/{username}/.nvm/versions/node/v14.2.0/bin/npm start
 
-`pm2 start index.js --name "myapp"`
+
+### 运行(ptpfreeleech目录下)
+
+`pm2 start index.js --name "ptp"`
 
 ### 查看日志
 
-`pm2 log myapp`
+`pm2 log ptp`
 
 ### 暂停
 
-`pm2 stop myapp`
+`pm2 stop ptp`
 
 ### 重启
 
-`pm2 restart myapp`
+`pm2 restart ptp`
 
 ### Discord 通知
 
