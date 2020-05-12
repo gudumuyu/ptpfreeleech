@@ -73,9 +73,9 @@ $ yarn run start # Run if using yarn.
   "maxleechers": -1, // 最大下载数. -1表示无限制.
   "minsize": -1, // 种子最小大小（单位mb）. -1表示无限制.
   "maxsize": -1, // 种子最大大小（单位mb）. -1表示无限制.
-  "maxAge": -1, // 种子上传最大时间（单位分钟）.
-  "downloadPath": "", // 下载软件的监控文件夹路径，种子文件下载到这里.
-  "discordWebhookUrl": "", // Discord机器人url, 可选.
+  "maxtime": -1, // 种子上传最大时间（单位秒）.
+  "autodownload": "", // 下载软件的监控文件夹路径，种子文件下载到这里.
+  "discord": "", // Discord机器人url, 可选.
   "interval": 15,// 运行间隔时间. 实测一个小时超过20次管理员有可能会发私信要求调整！！，所以不要设置低于3.
   "GoldenPopcorn": true, // 是否下载金种（会忽略所有其他条件）.
   "page": 1, // 爬的页数，50个种子为一页，有时候免费种子会超过一页。 爬取多页会重复调用ptp的api. 实测一个小时调用超过20次管理员有可能会发私信要求调整
