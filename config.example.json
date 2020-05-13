@@ -9,6 +9,12 @@
   "maxsize": -1,
   "mintime": -1,
   "maxtime": -1,
+  "GoldenPopcorn": true,
   "discord": "",
-  "autodownload": ""
+  "downloadpath": "",
+  "particularrules": [
+    { "maxtime": 600, "maxseeders": 5, "minleechers": -1},
+    { "maxtime": 1200, "maxseeders": 2, "minleechers": -1},
+    { "maxtime": -1, "maxseeders": 50, "minleechers": 10}
+  ]
 }

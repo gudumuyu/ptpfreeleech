@@ -137,6 +137,11 @@ try {
     if (!cache.freeleech.includes(torrent.Id)){
       // Run a series of checks based on user configuration.
 
+      //if the torrent is GoldenPopcorn ,just to download regardless of any rules
+      if (torrent.GoldenPopcorn && config.GoldenPopcorn) {
+        isMatch = true;
+      }
+      
       // particular rules
       if (config.particularrules){
         for (let index = 0; index < config.particularrules.length; index ++) {
@@ -180,9 +185,9 @@ try {
                         )
                       }
 
-                      // If autodownload path is present, download torrent to specified path.
-                      if (config.autodownload){
-                        if (fs.existsSync(config.autodownload)){
+                      // If downloadpath path is present, download torrent to specified path.
+                      if (config.downloadpath){
+                        if (fs.existsSync(config.downloadpath)){
                           try {
                             req = await request({
                               method: 'GET',
@@ -190,7 +195,7 @@ try {
                               resolveWithFullResponse: true
                             })
                           } catch (err){
-                            console.error('autodownload: The download request failed.')
+                            console.error('downloadpath: The download request failed.')
                             console.error(err)
                           }
 
@@ -201,7 +206,7 @@ try {
                             // Convert stream callbacks to a Promise for use with async/await.
                             await new Promise((resolve, reject) => {
                               let res = require('request')(download)
-                              let write = fs.createWriteStream(path.join(config.autodownload, filename))
+                              let write = fs.createWriteStream(path.join(config.downloadpath, filename))
 
                               write.on('error', reject)
 
@@ -212,12 +217,12 @@ try {
                               res.pipe(write)
                             })
                           } catch (err){
-                            console.error('autodownload: Could not write torrent file to path.')
+                            console.error('downloadpath: Could not write torrent file to path.')
                             console.error(err)
                           }
                         } else {
-                          config.autodownload = ''
-                          console.error('autodownload: Invalid path provided.')
+                          config.downloadpath = ''
+                          console.error('downloadpath: Invalid path provided.')
                         }
                       }
 
