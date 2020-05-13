@@ -111,7 +111,7 @@ try {
     let seeders = Number(torrent.Seeders)
     let leechers = Number(torrent.Leechers)
     let size = Number(torrent.Size)
-    let time = (new Date().getTime() - new Date(`${torrent.UploadTime} UTC`).getTime()) / 1000
+    let time = ((new Date().getTime() - new Date(`${torrent.UploadTime} UTC`).getTime()) / 1000)/60
 
     // Parse user seeder configuration.
     let minseeders = Number(config.minseeders)
@@ -136,22 +136,23 @@ try {
     // Check if torrent is already within the known freeleech cache.
     if (!cache.freeleech.includes(torrent.Id)){
       // Run a series of checks based on user configuration.
-      if (config.matchByAgeAndMaxSeeders){
-        for (let index = 0; index < config.matchByAgeAndMaxSeeders.length; index ++) {
-          let rule = config.matchByAgeAndMaxSeeders[index]
-          if (time <= rule.maxAge && time > maxtime && seeders <= rule.maxSeeders) {
-            if (minsize === -1 || size >= minsize) {
-              isMatch = true;
-              break;
-            } 
-          }else {
-                if (rule.maxAge === -1 && seeders <= rule.maxSeeders ){
-                  isMatch = true;
-                  break;
-                }
-           }
+
+      // particular rules
+      if (config.particularrules){
+        for (let index = 0; index < config.particularrules.length; index ++) {
+          let rule = config.particularrules[index]
+          if (rule.max === -1 || time <= rule.maxtime && time > maxtime) {
+            if (rule.maxseeders === -1 || seeders <= rule.maxseeders) {
+              if (rule.minleechers === -1 || leechers >= rule.minleechers) {
+                isMatch = true;
+                break;
+              }
+            }
+          }
         }
       }
+
+      //common rules
       if (minseeders === -1 || seeders >= minseeders){
         if (maxseeders === -1 || seeders <= maxseeders){
           if (minleechers === -1 || leechers >= minleechers){
