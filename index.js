@@ -141,12 +141,12 @@ try {
       if (torrent.GoldenPopcorn && config.GoldenPopcorn) {
         isMatch = true;
       }
-      
+
       // particular rules
       if (config.particularrules){
         for (let index = 0; index < config.particularrules.length; index ++) {
           let rule = config.particularrules[index]
-          if (rule.max === -1 || time <= rule.maxtime && time > maxtime) {
+          if (rule.maxtime === -1 || time <= rule.maxtime && time > maxtime) {
             if (rule.maxseeders === -1 || seeders <= rule.maxseeders) {
               if (rule.minleechers === -1 || leechers >= rule.minleechers) {
                 isMatch = true;
