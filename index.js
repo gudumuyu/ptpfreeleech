@@ -143,7 +143,7 @@ try {
       }
 
       // particular rules
-      if (config.particularrules){
+      if (config.particularrules && size >= minsize){
         for (let index = 0; index < config.particularrules.length; index ++) {
           let rule = config.particularrules[index]
           if (rule.maxtime === -1 || time <= rule.maxtime && time > maxtime) {
